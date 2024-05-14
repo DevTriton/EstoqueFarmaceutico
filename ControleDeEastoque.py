@@ -5,7 +5,7 @@ conexao = mysql.connector.connect(
     host='localhost',
     user='root',
     password='',
-    database='EstoqueFarmaceutico',
+    database='estoque_farmaceutico',
 )   
 
 class estoque:
@@ -56,10 +56,10 @@ class estoque:
         print("|                        OOP PYTHON                          |")
         print("|############################################################|")
         print("Oque deseja fazer?")
-        print("1) Cadastrar Remedio")
-        print("2) Imprimir lista Remedios")
-        print("3) excluir um Remedio")
-        print("4) atualizar um Remedio")
+        print("1) Cadastrar Remédio")
+        print("2) Imprimir lista Remédios")
+        print("3) excluir um Remédio")
+        print("4) atualizar um Remédio")
         print("5) Sair")
         self.opcao=int(input("digite a opção que deseja fazer: "))
 
