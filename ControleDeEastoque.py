@@ -5,7 +5,7 @@ conexao = mysql.connector.connect(
     host='localhost',
     user='root',
     password='',
-    database='estoque_farmaceutico',
+    database='EstoqueFarmaceutico',
 )   
 
 class estoque:
