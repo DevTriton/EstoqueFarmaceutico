@@ -48,14 +48,14 @@ class estoque:
         conexao.close()  
         print("----------------------------------------")
 
-    def Remover(self):       
+    def remover(self):       
         op=int(input("digite o ID do medicamento que deseja apagar: "))
         cursor = conexao.cursor()
         cursor.execute("DELETE FROM REMEDIOS where ID_REMEDIO = '"+str(op)+"';")
         conexao.commit()
         conexao.close()
 
-    def Atualizar(self):
+    def atualizar(self):
         op=int(input("digite o ID do medicamento que deseja alterar"))
         op1=int(input("Oque voce deseja alterar? 1-nome 2-fabricante 3-dose 4-tarja 5-quantidade de comprimidos 6-data 7-valor 8-descrição 9-quantidade de caixas 10-sair"))
         cursor = conexao.cursor()
@@ -64,30 +64,39 @@ class estoque:
             match op1:
                 case 1:
                     nome=input("digite o nome do medicamento: ").upper()
+                    cursor.execute("UPDATE REMEDIOS SET NOME = "'+nome+'" WHERE ID_REMEDIO = "+str(op)+" ;")
                 case 2:    
                     fabricante=input("digite o fabricante: ").upper()
+                    cursor.execute("UPDATE REMEDIOS SET FABRICANTE = "'+fabricante+'" WHERE ID_REMEDIO = "+str(op)+" ;")
                 case 3:    
                     dose=input("digite a dose Ex: 5mg: ").upper()
+                    cursor.execute("UPDATE REMEDIOS SET DOSE = "'+dose+'" WHERE ID_REMEDIO = "+str(op)+" ;")
                 case 4:
                     tarja=int(input("digite a tarja 1-Sem tarja 2-Tarja vermelha 3-Tarja preta 4-Tarja amarela: "))
+                    cursor.execute("UPDATE REMEDIOS SET TARJA = "+str(tarja)+" WHERE ID_REMEDIO = "+str(op)+" ;")
                 case 5: 
                     qtd_comprimidos=int(input("digite a quantidade de comprimidos: "))
+                    cursor.execute("UPDATE REMEDIOS SET QTD_COMPRIMIDOS = "+str(qtd_comprimidos)+" WHERE ID_REMEDIO = "+str(op)+" ;")
                 case 6: 
                     data=input("digite a data Ex: 2023-11-14 ANO-MÊS-DIA: ")           
                     data = datetime.strptime(data, "%Y-%m-%d")
                     databr=data.strftime("%Y-%m-%d")
+                    cursor.execute("UPDATE REMEDIOS SET DATA = "+str(data)+" WHERE ID_REMEDIO = "+str(op)+" ;")
                 case 7: 
                     valor = float(input("digite o valor Ex: 4.50: "))
+                    cursor.execute("UPDATE REMEDIOS SET VALOR = "+str(valor)+" WHERE ID_REMEDIO = "+str(op)+" ;")
                 case 8:
                     descricao = input("digite a descricao do remedio: ")
+                    cursor.execute("UPDATE REMEDIOS SET DESCRICAO = "+str(descricao)+" WHERE ID_REMEDIO = "+str(op)+" ;")
                 case 9:
                     qtd_remedios = int(input("digite a quantidade de caixas a serem cadastradas: "))
+                    cursor.execute("UPDATE REMEDIOS SET QTD_REMEDIOS = "+str(qtd_remedios)+" WHERE ID_REMEDIO = "+str(op)+" ;")
                 case 10:
                     break         
 
     def menu_rem(self):
         print("|############################################################|")
-        print("|                        OOP PYTHON                          |")
+        print("|                           Menu                             |")
         print("|############################################################|")
         print("Oque deseja fazer?")
         print("1) Cadastrar Remédio")
@@ -95,7 +104,9 @@ class estoque:
         print("3) excluir um Remédio")
         print("4) atualizar um Remédio")
         print("5) Sair")
-        self.opcao=int(input("digite a opção que deseja fazer: "))
+        self.opcao=int(input("Digite a opção que deseja executar: "))
+        while self.opcao<1 or self.opcao>5:
+            self.opcao=int(input("Digite a opção que deseja executar: "))
 
     def executar_rem(self):    
         while self.opcao != 5:
@@ -106,7 +117,7 @@ class estoque:
                 elif self.opcao==2:
                     self.imprimir()
                 elif self.opcao==3:
-                    self.Remover()
+                    self.remover()
                 elif self.opcao==4:
                     self.atualizar()          
                 elif self.opcao==5:
