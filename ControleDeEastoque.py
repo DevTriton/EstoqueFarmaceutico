@@ -30,26 +30,60 @@ class estoque:
         cursor = conexao.cursor()
         cursor.execute("INSERT INTO REMEDIOS (NOME, FABRICANTE, DOSE, TARJA, QTD_COMPRIMIDOS, DATA, VALOR, DESCRICAO, QTD_REMEDIOS) VALUES ('"+nome+"', '"+fabricante+"', '"+dose+"',  "+str(tarja)+", "+str(qtd_comprimidos)+", '"+databr+"', "+str(valor)+", '"+descricao+"', "+str(qtd_remedios)+" ); ")
         conexao.commit()
-        cursor.close()
         conexao.close()
         print("feito")
 
     def imprimir(self):
 
-            print("----------------------------------------")
-            cursor = conexao.cursor()
-            cursor.execute("select NOME, FABRICANTE, DOSE, TARJA, QTD_COMPRIMIDOS, DATA, VALOR, DESCRICAO, QTD_REMEDIOS from REMEDIOS;")
-            retorno = cursor.fetchall()
-            lista = []
-            for linha in retorno:
-                lista.append(linha[:])
-                index = len(lista) - 1
-                print(lista[index])
-            conexao.close()  
-            print("----------------------------------------")
+        print("----------------------------------------")
+        cursor = conexao.cursor()
+        cursor.execute("select NOME, FABRICANTE, DOSE, TARJA, QTD_COMPRIMIDOS, DATA, VALOR, DESCRICAO, QTD_REMEDIOS from REMEDIOS;")
+        retorno = cursor.fetchall()
+        lista = []
+        for linha in retorno:
+            lista.append(linha[:])
+            index = len(lista) - 1
+            print(lista[index])
+        conexao.commit()
+        conexao.close()  
+        print("----------------------------------------")
 
+    def Remover(self):       
+        op=int(input("digite o ID do medicamento que deseja apagar: "))
+        cursor = conexao.cursor()
+        cursor.execute("DELETE FROM REMEDIOS where ID_REMEDIO = '"+str(op)+"';")
+        conexao.commit()
+        conexao.close()
 
+    def Atualizar(self):
+        op=int(input("digite o ID do medicamento que deseja alterar"))
+        op1=int(input("Oque voce deseja alterar? 1-nome 2-fabricante 3-dose 4-tarja 5-quantidade de comprimidos 6-data 7-valor 8-descrição 9-quantidade de caixas 10-sair"))
+        cursor = conexao.cursor()
+        while op1!=10:
         
+            match op1:
+                case 1:
+                    nome=input("digite o nome do medicamento: ").upper()
+                case 2:    
+                    fabricante=input("digite o fabricante: ").upper()
+                case 3:    
+                    dose=input("digite a dose Ex: 5mg: ").upper()
+                case 4:
+                    tarja=int(input("digite a tarja 1-Sem tarja 2-Tarja vermelha 3-Tarja preta 4-Tarja amarela: "))
+                case 5: 
+                    qtd_comprimidos=int(input("digite a quantidade de comprimidos: "))
+                case 6: 
+                    data=input("digite a data Ex: 2023-11-14 ANO-MÊS-DIA: ")           
+                    data = datetime.strptime(data, "%Y-%m-%d")
+                    databr=data.strftime("%Y-%m-%d")
+                case 7: 
+                    valor = float(input("digite o valor Ex: 4.50: "))
+                case 8:
+                    descricao = input("digite a descricao do remedio: ")
+                case 9:
+                    qtd_remedios = int(input("digite a quantidade de caixas a serem cadastradas: "))
+                case 10:
+                    break         
 
     def menu_rem(self):
         print("|############################################################|")
