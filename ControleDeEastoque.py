@@ -14,6 +14,42 @@ class estoque:
         self.id_estoque = id_estoque
         self.opcao = 0
 
+    """menu estoque, aqui o sistema pergunta oque o usuario deseja manupilar a fim de entrar em outro menu."""
+    def menu_estoque(self):
+        print("|############################################################|")
+        print("|                           Menu                             |")
+        print("|############################################################|")
+        print("Qual lista deseja Manupilar?")
+        print("1) Remedio")
+        print("2) Destribuidor")
+        print("3) Funcionario")
+        print("4) Regulamentações")
+        print("5) Cliente")
+        print("6) Endereço")
+        print("7) Sair")
+        self.opcao=int(input("digite a opção desejada: "))
+        while self.opcao<1 or self.opcao>7:
+            print("opção invalida")
+            self.opcao=int(input("digite a opção desejada: ")) 
+
+    """metch case para decidir o fluxo do código."""
+    def executar_estoque(self):
+        while self.opcao!=7:
+            self.menu_estoque()
+
+            match self.opcao:
+                case 1:
+                    a = Remedio()
+                    a.executar_rem()
+                case 2:
+                    a = Remedio()
+                    a.executar_rem()
+
+
+class Remedio:
+    def __init__(self):
+        self.opcao = 0
+
     """cadastrar medicamentos no estoque"""
     def cadastrar_medicamento(self):
 
@@ -121,19 +157,19 @@ class estoque:
     """executar focado nas operações do modulo estoque, enquanto o usuario não digitar 5 o menu será exibido novamente ao fim da operação"""
     def executar_rem(self):    
         while self.opcao != 5:
-                self.menu_rem() 
-                
-                if self.opcao==1:
-                    self.cadastrar_medicamento()
-                elif self.opcao==2:
-                    self.imprimir()
-                elif self.opcao==3:
-                    self.remover()
-                elif self.opcao==4:
-                    self.atualizar()          
-                elif self.opcao==5:
-                    break   
+            self.menu_rem() 
+            
+            if self.opcao==1:
+                self.cadastrar_medicamento()
+            elif self.opcao==2:
+                self.imprimir()
+            elif self.opcao==3:
+                self.remover()
+            elif self.opcao==4:
+                self.atualizar()          
+            elif self.opcao==5:
+                break   
                              
 
 objeto1 = estoque()
-objeto1.executar_rem()
+objeto1.executar_estoque()
