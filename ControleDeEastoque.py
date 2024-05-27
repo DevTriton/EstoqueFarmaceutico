@@ -1,6 +1,7 @@
 import mysql.connector
 from datetime import datetime
 
+"""conexão com o mysql"""
 conexao = mysql.connector.connect(
     host='localhost',
     user='root',
@@ -13,6 +14,7 @@ class estoque:
         self.id_estoque = id_estoque
         self.opcao = 0
 
+    """cadastrar medicamentos no estoque"""
     def cadastrar_medicamento(self):
 
         nome=input("digite o nome do medicamento: ").upper()
@@ -27,12 +29,14 @@ class estoque:
         descricao = input("digite a descricao do remedio: ")
         qtd_remedios = int(input("digite a quantidade de caixas a serem cadastradas: "))
 
+        """cursor para a execução do comando sql"""
         cursor = conexao.cursor()
         cursor.execute("INSERT INTO REMEDIOS (NOME, FABRICANTE, DOSE, TARJA, QTD_COMPRIMIDOS, DATA, VALOR, DESCRICAO, QTD_REMEDIOS) VALUES ('"+nome+"', '"+fabricante+"', '"+dose+"',  "+str(tarja)+", "+str(qtd_comprimidos)+", '"+databr+"', "+str(valor)+", '"+descricao+"', "+str(qtd_remedios)+" ); ")
         conexao.commit()
         conexao.close()
         print("feito")
 
+    """imprimir remedios do estoque através de um select executado pelo cursor"""
     def imprimir(self):
 
         print("----------------------------------------")
@@ -40,6 +44,7 @@ class estoque:
         cursor.execute("select NOME, FABRICANTE, DOSE, TARJA, QTD_COMPRIMIDOS, DATA, VALOR, DESCRICAO, QTD_REMEDIOS from REMEDIOS;")
         retorno = cursor.fetchall()
         lista = []
+        """pega o retorno e divide em listas diferentes para facilitar a leitura do user"""
         for linha in retorno:
             lista.append(linha[:])
             index = len(lista) - 1
@@ -48,6 +53,7 @@ class estoque:
         conexao.close()  
         print("----------------------------------------")
 
+    """remover remedio do estoque através do id informado pelo user"""
     def remover(self):       
         op=int(input("digite o ID do medicamento que deseja apagar: "))
         cursor = conexao.cursor()
@@ -55,12 +61,15 @@ class estoque:
         conexao.commit()
         conexao.close()
 
+    """atualizar os dados do remedio informado por id"""
     def atualizar(self):
         op=int(input("digite o ID do medicamento que deseja alterar"))
+        """Perguntar ao user oque ele deseja alterar do medicamento indicado"""
         op1=int(input("Oque voce deseja alterar? 1-nome 2-fabricante 3-dose 4-tarja 5-quantidade de comprimidos 6-data 7-valor 8-descrição 9-quantidade de caixas 10-sair"))
         cursor = conexao.cursor()
+        """enquanto o usuario não digitar 10(sair) como resposta a pergunta será exebida novamente ao fim de cada operação"""
         while op1!=10:
-        
+            """switch case para realização independente de cada operação segundo a resposta do cliente."""
             match op1:
                 case 1:
                     nome=input("digite o nome do medicamento: ").upper()
@@ -92,8 +101,9 @@ class estoque:
                     qtd_remedios = int(input("digite a quantidade de caixas a serem cadastradas: "))
                     cursor.execute("UPDATE REMEDIOS SET QTD_REMEDIOS = "+str(qtd_remedios)+" WHERE ID_REMEDIO = "+str(op)+" ;")
                 case 10:
-                    break         
+                    break    
 
+    """menu do modulo remedios, aqui é feita a pergunta para o cliente do que deseja fazer."""
     def menu_rem(self):
         print("|############################################################|")
         print("|                           Menu                             |")
@@ -108,6 +118,7 @@ class estoque:
         while self.opcao<1 or self.opcao>5:
             self.opcao=int(input("Digite a opção que deseja executar: "))
 
+    """executar focado nas operações do modulo estoque, enquanto o usuario não digitar 5 o menu será exibido novamente ao fim da operação"""
     def executar_rem(self):    
         while self.opcao != 5:
                 self.menu_rem() 
